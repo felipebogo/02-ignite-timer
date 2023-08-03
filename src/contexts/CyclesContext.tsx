@@ -5,7 +5,7 @@ import {
   useReducer,
   useState,
 } from 'react'
-import { ActionTypes, Cycle, CyclesReducer } from '../reducers/cycles/reducer'
+import { Cycle, CyclesReducer } from '../reducers/cycles/reducer'
 import {
   addNewCycleAction,
   clearActiveCycleAction,

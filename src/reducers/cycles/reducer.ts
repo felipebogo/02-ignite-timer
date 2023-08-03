@@ -1,4 +1,4 @@
-import { ActionTypes } from './actions'
+import { ActionType, ActionTypes } from './actions'
 import { produce } from 'immer'
 
 export interface Cycle {
@@ -15,7 +15,7 @@ interface CycleState {
   activeCycleId: string | null
 }
 
-export function CyclesReducer(state: CycleState, action: any) {
+export function CyclesReducer(state: CycleState, action: ActionType) {
   console.log('acao bebe ', action)
   switch (action.type) {
     case ActionTypes.ADD_NEW_CYCLE:
@@ -25,8 +25,8 @@ export function CyclesReducer(state: CycleState, action: any) {
       //   activeCycleId: action.payload.newCycle.id,
       // }
       return produce(state, (draft) => {
-        draft.cycles.push(action.payload.newCycle)
-        draft.activeCycleId = action.payload.newCycle.id
+        draft.cycles.push(action.payload!.newCycle)
+        draft.activeCycleId = action.payload!.newCycle.id
       })
     case ActionTypes.INTERRUPT_CURRENT_CYCLE: {
       // return {
