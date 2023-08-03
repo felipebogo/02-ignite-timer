@@ -5,7 +5,7 @@ import {
   useReducer,
   useState,
 } from 'react'
-import { Cycle, CyclesReducer } from '../reducers/cycles/reducer'
+import { Cycle, CycleState, CyclesReducer } from '../reducers/cycles/reducer'
 import {
   addNewCycleAction,
   clearActiveCycleAction,
@@ -13,6 +13,7 @@ import {
   markCurrentCycleAsFinishedAction,
 } from '../reducers/cycles/actions'
 import { differenceInSeconds } from 'date-fns'
+import { produce } from 'immer'
 
 interface CreateCycleData {
   task: string
@@ -52,7 +53,29 @@ export function CyclesContextProvider({
         '@ignite-timer:cycles-state-1.0.0',
       )
       if (storedStateAsJSON) {
-        return JSON.parse(storedStateAsJSON)
+        const dataParsed = JSON.parse(storedStateAsJSON) as CycleState
+        console.log('valor q veio bebe ', dataParsed)
+        const formatedData = {
+          ...dataParsed,
+          cycles: produce(dataParsed.cycles, (draft) => {
+            draft.forEach((cycle) => {
+              const { stardDate, interruptedDate, finishedDate } = cycle
+              if (stardDate) {
+                cycle.stardDate = new Date(stardDate)
+              }
+              if (interruptedDate) {
+                cycle.interruptedDate = new Date(interruptedDate)
+              }
+              if (finishedDate) {
+                cycle.finishedDate = new Date(finishedDate)
+              }
+            })
+          }),
+        }
+
+        console.log('valor depois d eformatado', formatedData)
+
+        return formatedData
       }
       return initialState
     },
