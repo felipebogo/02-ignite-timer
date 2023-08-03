@@ -16,7 +16,6 @@ export interface CycleState {
 }
 
 export function CyclesReducer(state: CycleState, action: ActionType) {
-  console.log('acao bebe ', action)
   switch (action.type) {
     case ActionTypes.ADD_NEW_CYCLE:
       // return {

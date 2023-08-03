@@ -54,7 +54,6 @@ export function CyclesContextProvider({
       )
       if (storedStateAsJSON) {
         const dataParsed = JSON.parse(storedStateAsJSON) as CycleState
-        console.log('valor q veio bebe ', dataParsed)
         const formatedData = {
           ...dataParsed,
           cycles: produce(dataParsed.cycles, (draft) => {
@@ -72,8 +71,6 @@ export function CyclesContextProvider({
             })
           }),
         }
-
-        console.log('valor depois d eformatado', formatedData)
 
         return formatedData
       }
